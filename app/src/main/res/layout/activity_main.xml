@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#12141A"
+    android:padding="12dp"
+    android:layoutDirection="rtl">
+
+    <com.aramin.spinner.WheelView
+        android:id="@+id/wheel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#FFD700"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:padding="6dp" />
+
+    <Button
+        android:id="@+id/btn_spin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="چرخش 🎡"
+        android:textSize="20sp"
+        android:backgroundTint="#E74C3C"
+        android:textColor="#FFFFFF" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layoutDirection="rtl"
+        android:paddingTop="8dp">
+
+        <EditText
+            android:id="@+id/et_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="نام گزینه جدید"
+            android:textColorHint="#888"
+            android:textColor="#EEE"
+            android:maxLines="1"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="افزودن"
+            android:backgroundTint="#2ECC71" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="برای حذف، روی گزینه نگه دارید"
+        android:textColor="#888"
+        android:textSize="13sp"
+        android:gravity="center" />
+
+    <ListView
+        android:id="@+id/lv_options"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5" />
+</LinearLayout>
