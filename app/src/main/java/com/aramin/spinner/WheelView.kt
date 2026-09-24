@@ -118,11 +118,6 @@ class WheelView @JvmOverloads constructor(
 
             paint.color = Color.parseColor("#1A1D23")
             val a = Math.toRadians((rotation + i * slice).toDouble())
-            val path = Path().apply {
-                moveTo(cx, cy)
-                lineTo(cx + r * cos(a).toFloat(), cy + r * sin(a).toFloat())
-                strokeWidth = 3f
-            }
             val linePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 color = Color.parseColor("#1A1D23"); strokeWidth = 3f
             }
