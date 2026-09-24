@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             save()
         }
 
-        lvOptions.onItemLongClickListener = { _, _, pos, _ ->
+        lvOptions.setOnItemLongClickListener { _, _, pos, _ ->
             AlertDialog.Builder(this)
                 .setTitle(items[pos])
                 .setMessage("حذف این گزینه؟")
