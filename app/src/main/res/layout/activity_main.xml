@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#12141A"
+    android:background="@drawable/bg_main"
     android:padding="12dp"
     android:layoutDirection="rtl">
 
@@ -27,49 +27,62 @@
     <Button
         android:id="@+id/btn_spin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:text="چرخش 🎡"
         android:textSize="20sp"
-        android:backgroundTint="#E74C3C"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:background="@drawable/btn_red"
+        android:stateListAnimator="@null"
+        android:layout_marginTop="4dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layoutDirection="rtl"
-        android:paddingTop="8dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="4dp">
 
         <EditText
             android:id="@+id/et_add"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:hint="نام گزینه جدید"
-            android:textColorHint="#888"
+            android:textColorHint="#889"
             android:textColor="#EEE"
+            android:background="@drawable/bg_edit"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
             android:maxLines="1"
             android:inputType="text" />
 
         <Button
             android:id="@+id/btn_add"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="افزودن"
-            android:backgroundTint="#2ECC71" />
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_green"
+            android:stateListAnimator="@null"
+            android:layout_marginStart="8dp" />
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="برای حذف، روی گزینه نگه دارید"
-        android:textColor="#888"
-        android:textSize="13sp"
-        android:gravity="center" />
+        android:text="گزینه‌ها:"
+        android:textColor="#AAB"
+        android:textSize="14sp"
+        android:paddingStart="6dp"
+        android:paddingBottom="2dp" />
 
     <ListView
         android:id="@+id/lv_options"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5" />
+        android:layout_weight="0.5"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:paddingBottom="8dp" />
 </LinearLayout>
