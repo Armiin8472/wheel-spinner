@@ -3,8 +3,8 @@ package com.aramin.spinner
 import android.app.AlertDialog
 import android.content.Context
 import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.SoundPool
-import android.media.ToneGenerator
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -20,7 +20,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var lvOptions: ListView
     private lateinit var adapter: OptionAdapter
     private val items = mutableListOf<String>()
-    private var tone: ToneGenerator? = null
+
+    private var soundPool: SoundPool? = null
+    private var sndTick = 0
+    private var sndWin = 0
+    private var sndSpin = 0
+    private var ready = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,31 +36,35 @@ class MainActivity : AppCompatActivity() {
         lvOptions = findViewById(R.id.lv_options)
         val etAdd = findViewById<EditText>(R.id.et_add)
 
-        try { tone = ToneGenerator(AudioAttributes.CONTENT_TYPE_SONIFICATION, 80) } catch (_: Exception) {}
+        val attrs = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_MEDIA)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+        soundPool = SoundPool.Builder().setMaxStreams(6).setAudioAttributes(attrs).build()
+            .also { sp ->
+                sndTick = sp.load(this, R.raw.tick, 1)
+                sndWin = sp.load(this, R.raw.win, 1)
+                sndSpin = sp.load(this, R.raw.spin, 1)
+                sp.setOnLoadCompleteListener { _, _, _ -> ready = true }
+            }
 
         load()
         adapter = OptionAdapter()
         lvOptions.adapter = adapter
 
-        wheel.onTick = { tone?.startTone(ToneGenerator.TONE_PROP_BEEP, 60) }
+        wheel.onTick = {
+            if (ready) soundPool?.play(sndTick, 1f, 1f, 1, 0, 1f)
+        }
         wheel.onFinished = { winner ->
             tvResult.text = "🎉 $winner"
             tvResult.visibility = View.VISIBLE
-            // victory jingle
-            Thread {
-                try {
-                    val notes = intArrayOf(
-                        ToneGenerator.TONE_DTMF_1, ToneGenerator.TONE_DTMF_3,
-                        ToneGenerator.TONE_DTMF_5, ToneGenerator.TONE_DTMF_7
-                    )
-                    notes.forEach { tone?.startTone(it, 140); Thread.sleep(150) }
-                } catch (_: Exception) {}
-            }.start()
+            if (ready) soundPool?.play(sndWin, 1f, 1f, 2, 0, 1f)
         }
 
         findViewById<Button>(R.id.btn_spin).setOnClickListener {
             if (items.size < 2) { toast("حداقل ۲ گزینه لازم است"); return@setOnClickListener }
             tvResult.visibility = View.GONE
+            if (ready) soundPool?.play(sndSpin, 1f, 1f, 1, 0, 1f)
             wheel.spin()
         }
 
@@ -84,16 +93,23 @@ class MainActivity : AppCompatActivity() {
                     .setTitle(items[pos])
                     .setMessage("حذف این گزینه؟")
                     .setPositiveButton("حذف") { _, _ ->
-                        items.removeAt(pos)
-                        adapter.notifyDataSetChanged()
-                        wheel.items = items
-                        save()
+                        if (pos < items.size) {
+                            items.removeAt(pos)
+                            adapter.notifyDataSetChanged()
+                            wheel.items = items
+                            save()
+                        }
                     }
                     .setNegativeButton("انصراف", null)
                     .show()
             }
             return v
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        soundPool?.release()
     }
 
     private fun prefs() = getSharedPreferences("wheel", Context.MODE_PRIVATE)

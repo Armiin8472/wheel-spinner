@@ -27,12 +27,15 @@
     <Button
         android:id="@+id/btn_spin"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:text="چرخش 🎡"
         android:textSize="20sp"
         android:textColor="#FFFFFF"
         android:background="@drawable/btn_red"
         android:stateListAnimator="@null"
+        android:paddingVertical="14dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:layout_marginTop="4dp" />
 
     <LinearLayout
@@ -60,11 +63,13 @@
         <Button
             android:id="@+id/btn_add"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:text="افزودن"
             android:textColor="#FFFFFF"
             android:background="@drawable/btn_green"
             android:stateListAnimator="@null"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:layout_marginStart="8dp" />
     </LinearLayout>
 
